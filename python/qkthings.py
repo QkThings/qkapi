@@ -143,8 +143,8 @@ def handleDebugJson(api):
 
 
 if __name__ == "__main__":
-	print "QkAPI test"
-	HOST = "192.168.1.66"
+	print "qkapi test"
+	HOST = "localhost"
 	PORT = 1234
 	api = QkAPI()
 	api.connect(HOST, PORT)

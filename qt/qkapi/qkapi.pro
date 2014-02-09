@@ -10,6 +10,8 @@ QT       -= gui
 TARGET = qkapi
 TEMPLATE = lib
 
+DEFINES += QT_NO_DEBUG_OUTPUT
+
 DEFINES += QKAPI_LIBRARY
 
 SOURCES += qkapi.cpp \
