@@ -17,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef QKAPI_GLOBAL_H
+#define QKAPI_GLOBAL_H
+
 #include <QtCore/qglobal.h>
 
 #if defined(QKAPI_LIBRARY)

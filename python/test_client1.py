@@ -4,7 +4,7 @@ from qkthings import QkAPI
 import time
 
 def handleDataJson(api):
-	connID = int(api.json["data"]["connID"])
+	connID = int(api.json["data"]["conn_id"])
 	addr = int(api.json["data"]["address"])
 	print "-----------------------------------------------"
 	print " %-8s connID=%d address=%04x %s" % ("DATA", connID, addr, time.strftime("%H:%M:%S"))
@@ -13,7 +13,7 @@ def handleDataJson(api):
 		print "%-9s %s" % (obj["label"],obj["value"])	
 
 def handleEventJson(api):
-	connID = int(api.json["event"]["connID"])
+	connID = int(api.json["event"]["conn_id"])
 	addr = int(api.json["event"]["address"])
 	print "-----------------------------------------------"
 	print " %-8s connID=%d address=%04x %s" % ("EVENT", connID, addr, time.strftime("%H:%M:%S"))
@@ -22,7 +22,7 @@ def handleEventJson(api):
 	print "args:    ",api.json["event"]["args"]	
 
 def handleDebugJson(api):
-	connID = int(api.json["debug"]["connID"])
+	connID = int(api.json["debug"]["conn_id"])
 	addr = int(api.json["debug"]["address"])
 	print "-----------------------------------------------"
 	print " %-8s connID=%d address=%04x %s" % ("DEBUG", connID, addr, time.strftime("%H:%M:%S"))
@@ -44,10 +44,10 @@ if __name__ == "__main__":
 	api.subscribe("event", handleEventJson)
 	api.subscribe("debug", handleDebugJson)
 
-	api.set("/qk/cmds/start")
+#	api.set("/qk/cmds/start")
 	print "Press any key to exit..."
 	raw_input()
-	api.set("/qk/cmds/stop")
+#	api.set("/qk/cmds/stop")
 	api.disconnect()
 	print "Done"
 

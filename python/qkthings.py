@@ -24,17 +24,18 @@ class QkAPI(object):
 		self._rx_str_buf = ""
 		self.json_str = ""
 		self.json = {}
+		self._registered_callbacks["rx"] = None
 
-	def _register_callback(self, id, callback):
+	def register_callback(self, id, callback):
 		self._registered_callbacks[id] = callback
 
-	def subscribe(self, subname, callback):
-		self.set("/qk/subscriptions/" + subname, 1)
-		self._register_callback(subname, callback)
+	def subscribe(self, subname, callback, conn = 0):
+		self.set("/qk/conns/%d/subscriptions/%s" % (conn, subname), 1)
+		self.register_callback(subname, callback)
 
-	def unsubscribe(self, subname, callback):
-		self.set("/qk/subscriptions/" + subname, 0)
-		self._register_callback(subname, None)
+	def unsubscribe(self, subname, conn = 0):
+		self.set("/qk/conns/%d/subscriptions/%s" % (conn, subname), 0)
+		self.register_callback(subname, None)
 	
 
 	def connect(self, hostname, port):
@@ -68,7 +69,8 @@ class QkAPI(object):
 	def _process(self):
 		self.json_str = self._rx_str_buf
 		self.json = json.loads(self.json_str)
-		self._ack = QkAPI._ACK
+		self._ack = QkAPI._ACK	
+
 		#print self.json
 		if "data" in self.json.keys() and self._registered_callbacks["data"] is not None:
 			self._registered_callbacks["data"](self)
@@ -76,6 +78,9 @@ class QkAPI(object):
 			self._registered_callbacks["event"](self)
 		if "debug" in self.json.keys() and self._registered_callbacks["debug"] is not None:
 			self._registered_callbacks["debug"](self)
+
+		if self._registered_callbacks["rx"] is not None:
+			self._registered_callbacks["rx"](self)		
 					
 	def _listener(self):
 		while self._alive:
@@ -94,15 +99,15 @@ class QkAPI(object):
 		self.wait()
 		print self.json_str
 
-	def get(self, resource, params=None,  wait=True, show_result=False):
-		self._client.send(self._call("get",[resource, params]))
+	def get(self, path, params=None,  wait=True, show_result=False):
+		self._client.send(self._call("get",[path, params]))
 		if wait or show_result:
 			self.wait()
 		if show_result:
 			print self.json_str
 	
-	def set(self, resource, params=None, wait=True, show_result=False):
-		self._client.send(self._call("set",[resource, params]))
+	def set(self, path, params=None, wait=True, show_result=False):
+		self._client.send(self._call("set",[path, params]))
 		if wait or show_result:
 			self.wait()
 		if show_result:

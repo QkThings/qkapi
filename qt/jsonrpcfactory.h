@@ -17,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef JSONRPCFACTORY_H
+#define JSONRPCFACTORY_H
+
 #include <QObject>
 #include "qkapi_global.h"
 

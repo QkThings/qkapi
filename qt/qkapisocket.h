@@ -17,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef QKAPISOCKET_H
+#define QKAPISOCKET_H
+
 #include "qkapi_global.h"
 #include <QTcpSocket>
 

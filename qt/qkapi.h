@@ -17,6 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef QKAPI_H
+#define QKAPI_H
+
 #include <QObject>
 #include "qkapi_global.h"
 
